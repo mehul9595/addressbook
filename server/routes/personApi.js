@@ -21,27 +21,36 @@ let persons = [{
     location: 'Mumbai'
 }];
 
+// next() => error handling middleware setup in index.js
+
 // get all persons
 router.get('/persons', (req, res) => {
     res.send(persons);
 });
 
-router.get('/persons:id', (req, res) => {
+router.get('/persons/:id', (req, res) => {
     res.send({
         type: 'get by id'
     });
 });
 
-router.put('/persons:id', (req, res) => {
+router.put('/persons/:id', (req, res) => {
     res.send({
         type: 'update by id'
     });
 });
 
-router.delete('/persons:id', (req, res) => {
-    res.send({
-        type: 'delete by id'
-    });
+
+router.delete('/persons/:id', (req, res, next) => {
+    console.log(req.params.id);
+
+    Person.findByIdAndDelete(req.params.id).then(function(p) {
+        res.send({
+            type: 'DELETE',
+            data: p
+        });
+        console.log('delete done');
+    }).catch(next);    
 });
 
 router.post('/persons', (req, res, next) => {
