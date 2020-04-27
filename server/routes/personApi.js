@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const _ = require('lodash');
+const Person = require('../models/person');
 
 // Persons API supports, GET All, Get Person by ID, Update By ID, Delete, and Add Person functions
 
@@ -43,16 +44,21 @@ router.delete('/persons:id', (req, res) => {
     });
 });
 
-router.post('/persons', (req, res) => {
+router.post('/persons', (req, res, next) => {
 
     var obj = _.merge({
         id: _id++
     }, req.body);
 
-    persons.push(obj);
+    var p = new Person(req.body);
+    p.save().then((obj)=>{
+        res.send(obj);
+    }).catch((next));
+    
+    // persons.push(obj);
     console.log(obj);
     
-    res.sendStatus(200);
+    //res.sendStatus(200);
 });
 
 module.exports = router;
