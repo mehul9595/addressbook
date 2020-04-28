@@ -14,7 +14,8 @@ const app = express();
 mongoose.Promise = global.Promise;
 var mongooseOpts = {
     useUnifiedTopology: true,
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useFindAndModify: false
 };
 mongoose.connect('mongodb://localhost:27017/addressbookdb', mongooseOpts)
     .then(console.log('mongo db connected...'));

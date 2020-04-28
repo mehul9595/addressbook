@@ -34,23 +34,28 @@ router.get('/persons/:id', (req, res) => {
     });
 });
 
-router.put('/persons/:id', (req, res) => {
-    res.send({
-        type: 'update by id'
-    });
+router.put('/persons/:id', (req, res, next) => {
+
+    Person.findByIdAndUpdate(req.params.id, req.body).then(() => {
+        Person.findOne({
+            _id: req.params.id
+        }).then((doc) => {
+            res.send(doc);
+        });
+    }).catch(next);
 });
 
 
 router.delete('/persons/:id', (req, res, next) => {
     console.log(req.params.id);
 
-    Person.findByIdAndDelete(req.params.id).then(function(p) {
+    Person.findByIdAndDelete(req.params.id).then(function (p) {
         res.send({
             type: 'DELETE',
             data: p
         });
         console.log('delete done');
-    }).catch(next);    
+    }).catch(next);
 });
 
 router.post('/persons', (req, res, next) => {
@@ -60,13 +65,13 @@ router.post('/persons', (req, res, next) => {
     }, req.body);
 
     var p = new Person(req.body);
-    p.save().then((obj)=>{
+    p.save().then((obj) => {
         res.send(obj);
     }).catch((next));
-    
+
     // persons.push(obj);
     console.log(obj);
-    
+
     //res.sendStatus(200);
 });
 
