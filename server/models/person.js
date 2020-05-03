@@ -3,6 +3,24 @@ const Schema = mongoose.Schema;
 
 //create schema and models for mongodb->person collection
 
+/*
+"geometry": {
+    "type": "Point",
+    "coordinates": [125.6, 10.1]
+  }
+  */
+
+const GeoSchema = new Schema({
+    type:{
+        type:'String',
+        default:'Point'
+    },
+    coordinates:{
+        type:[Number],
+        ensureIndex: "2dsphere"
+    }
+});
+
 const personSchema = new Schema({
     firstName: {
         type:'String',
@@ -17,7 +35,8 @@ const personSchema = new Schema({
     },
     location:{
         type:'String'        
-    }
+    },
+    geometry: GeoSchema
 }, {
     collection: 'Persons'
 });

@@ -11,14 +11,21 @@ const baseURL = '/api';
 const app = express();
 
 // connect to mongodb
-mongoose.Promise = global.Promise;
+
 var mongooseOpts = {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useFindAndModify: false
 };
+
 mongoose.connect('mongodb://localhost:27017/addressbookdb', mongooseOpts)
-    .then(console.log('mongo db connected...'));
+    .then(console.log('mongo db connected...'))
+    .catch((err) => {
+        console.log('Something went wrong!!!'); //TODO: find out why this catch is not called!s
+        console.log(err);
+    });
+
+mongoose.Promise = global.Promise;
 
 app.use(bodyParser.json());
 app.use(baseURL, routes);

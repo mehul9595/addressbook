@@ -24,13 +24,27 @@ let persons = [{
 // next() => error handling middleware setup in index.js
 
 // get all persons
-router.get('/persons', (req, res) => {
-    res.send(persons);
+router.get('/persons', (req, res, next) => {
+    Person.find({}).then((doc) => {
+        res.send(doc);
+    }).catch(next);
 });
 
-router.get('/persons/:id', (req, res) => {
-    res.send({
-        type: 'get by id'
+router.get('/persons/:id', (req, res, next) => {
+    Person.findById(req.params.id).then((doc) => {
+        res.send(doc);
+    }).catch(next);
+});
+
+router.get('/persons', (req, res, next) => {
+    Person.geoSearch({
+        type: 'point',
+        coordinates: [parseFloat(req.query.lat), parseFloat(req.query.lng)]
+    }, {
+        maxDistance: 100,
+        speherical: true
+    }).then((doc) => {
+        res.send(doc);
     });
 });
 
