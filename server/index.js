@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('./routes/personApi');
 const mongoose = require('mongoose');
-
+const cors = require('cors');
 
 //TODO: move to config 
 const baseURL = '/api';
@@ -27,6 +27,7 @@ mongoose.connect('mongodb://localhost:27017/addressbookdb', mongooseOpts)
 
 mongoose.Promise = global.Promise;
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(baseURL, routes);
 
