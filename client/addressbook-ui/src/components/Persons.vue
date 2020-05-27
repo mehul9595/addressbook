@@ -14,6 +14,7 @@
 <script>
 import axios from "axios"
 
+const baseApiURL = "http://localhost:4000/api"
 
 export default {
   name: "Persons",
@@ -28,7 +29,7 @@ export default {
   }, 
   async created (){
     // this.todoName ="this is loaded on startup";
-    const response = await axios.get('http://localhost:4000/api/persons', { headers: {"Access-Control-Allow-Origin": "*" }});
+    const response = await axios.get(baseApiURL+ '/persons', { headers: {"Access-Control-Allow-Origin": "*" }});
 
     this.personsList = response;
   }
