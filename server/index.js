@@ -28,7 +28,7 @@ var mongooseOpts = {
 };
 
 // 
-// mongodb://nblmongocosmosdb:d3hzEQRWeTHUHVEBWfLAAOUNv4Gato8Nm8zNS2iaF4mMhjcJwpDPgdRK4n3A5qHqHP7pgKa3dDlWp4quQMv8Ig==@nblmongocosmosdb.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@nblmongocosmosdb@
+
 mongoose.connect("mongodb://" + process.env.COSMOSDB_HOST + ":" + process.env.COSMOSDB_PORT + "/" + process.env.COSMOSDB_DBNAME + "?ssl=true&replicaSet=globaldb&retrywrites=" + process.env.RETRY_WRITES, mongooseOpts)
     .then(console.log('mongo db connecting...'))
     .catch((err) => {
